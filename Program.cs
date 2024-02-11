@@ -44,6 +44,29 @@ if (resp == "1")
 }
 else if (resp == "2")
 {
-    // TODO: parse data file
+    // parse the data file and display a weekly report
+    // read the file 
+    StreamReader sr = new StreamReader("data.txt");
+    string line;
+    while ((line = sr.ReadLine()) != null)
+    {
+        // parse the data
+        string[] data = line.Split(',');
+        // date is in data[0]
+        DateTime date = DateTime.Parse(data[0]);
+        // hours are in data[1]
+        int[] hours = data[1].Split('|').Select(Int32.Parse).ToArray();
+        // display the data
+        Console.WriteLine($"Week of {date:MMM}, {date:dd}, {date:yyyy}");
+        Console.WriteLine($"Su Mo Tu We Th Fr Sa Tot Avg");
+        Console.WriteLine($"-- -- -- -- -- -- -- --- ---");
+         for (int i = 0; i < 7; i++)
+        {
+            Console.Write($"{hours[i],2} ");
+        }
+        Console.WriteLine($"{hours.Sum(),3} {hours.Average():F1}");
+        Console.WriteLine();
+    }
+
 
 }
